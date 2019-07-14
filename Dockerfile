@@ -8,10 +8,15 @@ RUN apk update \
     && pip install flask-sqlalchemy \
     && pip install requests \
     && pip install pymysql \
-    && pip install mysql-connector 
+    && pip install mysql-connector \
+    #setuptools dependencies
+    && pip install docutils \
+    && pip install pytest \
+    && pip install pytest-runner \
+    && pip install pytest-cov
 
 WORKDIR /app-run
 COPY . /app-run
 
-ENTRYPOINT gunicorn -w 4 --bind 0.0.0.0:5000 --chdir /app-run/src/ server:app --reload
+ENTRYPOINT ash /app-run/init.sh
  

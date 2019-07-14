@@ -6,10 +6,10 @@ from flask import Flask,render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask import request, json, jsonify, abort, make_response
 
-from ADN import ADN
+from magneto.ADN import ADN
 
 
-app = Flask(__name__,template_folder="/app-run/src/templates")
+app = Flask(__name__,template_folder="/app-run/api/templates")
 app.config['TEMPLATES_AUTO_RELOAD'] = True 
 
 # Create a URL route in our application for "/"

@@ -8,7 +8,6 @@ class ADN:
         if N < MIN_LENGHT:
             return False
 
-        m = int(N/2)
         counth = 0;countv = 0;countobl1 = 0;countobl2 = 0; i=0
         while i < N :
             j =0
@@ -30,7 +29,7 @@ class ADN:
                     hor = 1
                 #check vertical
                 if j+1 < N and bases[j][i] == bases[j+1][i] :
-                    print('i:%s %s:%s == %s:%s'%(i,j,bases[j][i],j+1,bases[j+1][i]))
+                    #print('i:%s %s:%s == %s:%s'%(i,j,bases[j][i],j+1,bases[j+1][i]))
                     vert = vert + 1
                 else:
                     if vert >= MIN_LENGHT :
@@ -75,3 +74,15 @@ class ADN:
         print('counth:%s countv:%s countobl1:%s countobl2:%s'%(counth,countv,countobl1,countobl2))
 
         return False
+
+    # if __name__ == "__main__":
+    #     import sys
+    #     import json
+    #     from ADN import ADN
+        
+    #     if len(sys.argv) == 2:
+    #         data = json.loads(sys.argv[1])
+    #         resp = ADN.isMutant(data['dna'])
+    #         print("isMutant: %s"%(resp))
+    #     else:
+    #         print("Usage: python ADN.py <json_adn>")

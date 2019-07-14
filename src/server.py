@@ -10,6 +10,7 @@ from ADN import ADN
 
 
 app = Flask(__name__,template_folder="/app-run/src/templates")
+app.config['TEMPLATES_AUTO_RELOAD'] = True 
 
 # Create a URL route in our application for "/"
 @app.route('/')

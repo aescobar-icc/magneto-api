@@ -2,11 +2,158 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Application Home Page</title>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <title>Magneto Api</title>
+    <script>
+        const base = ['A','T','C','G'];
+        var m = [];
+        $(function(){
+            $('#n').change(createMatriz);
+            $('input[name="tipo"]').change(createMatriz);
+
+            $('#json_area').change(function(){
+                var val = JSON.parse($(this).val());
+                console.log(val);
+                if(val.dna){
+                    renderMatriz(val.dna)
+                }
+            })
+            function createMatriz(){
+                const n = parseInt($('#n').val());
+                const v = $('input[name="tipo"]:checked').val();
+                var j = 0;
+                m = [];
+                for(var i=0;i<n;i++){
+                    for(var k=0;k<n;k++){
+                        if(v == 'H'){
+                            if(!m[i])
+                                m[i] = [];
+                            m[i][k] = base[j%4];
+                        }
+                        if(v == 'V'){
+                            if(!m[k])
+                                m[k] = []
+                            m[k][i] = base[j%4];
+                        }
+                        if(v == 'D1'){
+                            if(!m[k])
+                                m[k] = []
+                            if(k+i < n){
+                                m[k][k+i] = base[j%4];
+                                m[k+i][k] = base[j%4];
+                            }
+                            //if(k-i >= 0)
+                            //    m[k][k-i] = base[j%4];
+                        }
+                        if(v == 'D2'){
+                            if(!m[k])
+                                m[k] = []
+                            if(n-1-k+i < n){
+                                m[k][n-1-k+i] = base[j%4];
+                            }
+                            if(n-1-k-i >=0){
+                                m[k][n-1-k-i] = base[j%4];
+                            }
+                        }
+
+                        if(v == 'R'){
+                            if(!m[i])
+                                m[i] = []
+                            m[i][k] = base[Math.floor(Math.random() * 100)%4];
+                        }
+                    }
+                    j++;
+                }
+                renderMatriz(m);
+                createJson();
+            }
+            function renderMatriz(m){
+                $('div.bases_container').html('');
+                    for(var i in m){
+                        var div = $('<div/>')
+                        for(var k in m[i]){
+                            var inp = $('<input id="in_'+i+'_'+k+'" class="cell" value="'+m[i][k]+'" >');
+                            div.append(inp);
+                            inp.change(createJson)
+                        }
+                        $('div.bases_container').append(div);
+                    }
+            }
+            function createJson(){
+                var data = {dna:[]}
+                $('div.bases_container').find('div').each(function(i,e){
+                    var l = '';
+                    $(e).find('input').each(function(k,ee){
+                        l+=$(ee).val()
+                    });
+                    //console.log(l)
+                    data.dna.push(l);
+                });
+                $('#json_area').val(JSON.stringify(data))
+            }
+            function send(){
+
+                $('#response').html('sending data...');
+                $.ajax({
+                    url: '/mutant',
+                    type: 'post',
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    complete: function (data) {
+                        $('#response').html('response: '+data.responseText);
+                    },
+                    data: $('#json_area').val()
+                });
+            }
+
+            
+            $('#btn_send').click(send);
+            $('#n').trigger('change');
+        })
+    </script>
+    <style>
+    .bases_container{
+        padding: 10px;
+    }
+    .cell{
+        width: 25px;
+        height: 25px;
+        border: 1px solid #949494;
+        margin-left: -1px;
+        margin-top: -1px;
+        text-align: center;
+    }
+    textarea{
+        width: 50%;
+        min-width: 400px;
+        min-height: 200px;
+    }
+    </style>
 </head>
 <body>
     <h2>
         Welcome to magneto API
     </h2>
+    <div>
+        SET N<input type="number" id="n" value="10" >
+        H<input type="radio" name="tipo" value="H" checked="checked">
+        V<input type="radio" name="tipo" value="V">
+        D1<input type="radio" name="tipo" value="D1">
+        D2<input type="radio" name="tipo" value="D2" >
+        RANDOM<input type="radio" name="tipo" value="R" >
+    </div>
+    <div class="bases_container">
+
+    </div>
+    <div class="bases_json">
+        <h3>SAMPLE POST</h3> 
+        <div>
+            <input type="button" value="TEST API" id="btn_send">
+                <span id="response">response:</span>
+
+        </div>
+        <textarea id="json_area"></textarea>
+    </div>
 </body>
 </html>

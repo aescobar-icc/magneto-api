@@ -56,17 +56,23 @@ def home():
 @app.route("/mutant/", methods=["POST"], strict_slashes=False )
 def isMutant():
     content = request.json
+    usebase = 'nobase' not in content
     #print( content )
     stats = Stats(dna=request.data)
 
-    stat = stats.getByDNA()
+    if usebase :
+        stat = stats.getByDNA()
+    else:
+        print('ignoring base')
+        stat = None
 
     if stat is None:
         if 'dna' not in content:
             stats.isMutant = False
         else:
             stats.isMutant = ADN.isMutant(content['dna'])
-        stats.saveStat()
+        if usebase: 
+            stats.saveStat()
     else:
         #print('already exists')
         stats = stat

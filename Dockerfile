@@ -15,6 +15,8 @@ RUN apk update \
     && pip install pytest-runner \
     && pip install pytest-cov
 
+ENV SQLALCHEMY_URI=mysql+pymysql://assurance:d3sarr0ll0@magneto-sql-proxy:3306/test_base
+
 WORKDIR /app-run
 COPY . /app-run
 

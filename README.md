@@ -2,6 +2,8 @@
 
 Con magneto-api sabrás cuando un humano es mutante, si encuentras más de una secuencia de cuatro letras iguales , de forma oblicua, horizontal o vertical. 
 
+![enter image description here](https://raw.githubusercontent.com/aescobar-icc/magneto-api/master/img/matris.png)
+
 Esta solución implementa un microservicio para un docker container.
 
 # Instalacion Local
@@ -62,4 +64,39 @@ En caso de que estés accediendo a un servidor con IP pública el paso anterior 
 ### 5.- Correr la Api 
 Ahora que ya tienes la imagen creada puedes correr el micro servicio.
 
-        $ sudo docker build -t magneto-api:v1 .
+        $ sudo docker run -it -p 5050:5000 magneto-api:v1
+
+Aquí estamos especificando que en el `host` la api será visible en el puerto 5050 y que en el `contenedor` corre en el puerto 5000.
+
+## Probar api usando postman
+
+Nuestra imagen se ha publicado en http://localhost:5050/mutant podemos testear fácilmente nuestra api usando `postman` enviando la información de adn en el siguiente formato:
+
+		{ “dna”:
+			["ATGCGA",
+			"CAGTGC",
+			"TTATGT",
+			"AGAAGG",
+			"CCCCTA",
+			"TCACTG"]
+		}
+Nota que si no has instalado la base de datos puedes agregar el valor `"nobase":null` para decirle a la api que no use la base de datos, obviamente esto hará que no se guraden stats.
+
+		{ “dna”:
+			["ATGCGA",
+			"CAGTGC",
+			"TTATGT",
+			"AGAAGG",
+			"CCCCTA",
+			"TCACTG"],
+			"nobase":null
+		}
+
+![enter image description here](https://raw.githubusercontent.com/aescobar-icc/magneto-api/master/img/postman.png)
+
+
+# Instalacion GCloud
+
+Para un acompleta guia de como instalar esta API en la nube de google sigue esta guía:
+
+[https://cloud.google.com/kubernetes-engine/docs/tutorials/hello-app](https://cloud.google.com/kubernetes-engine/docs/tutorials/hello-app)

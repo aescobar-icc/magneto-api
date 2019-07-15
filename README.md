@@ -4,7 +4,7 @@ Con magneto-api sabrás cuando un humano es mutante, si encuentras más de una s
 
 ![enter image description here](https://raw.githubusercontent.com/aescobar-icc/magneto-api/master/img/matris.png)
 
-Esta solución implementa un microservicio para un docker container.
+Esta solución implementa un micro servicio para un Docker Container.
 
 # Instalacion Local
 ### 1.- Instalar `Docker` .
@@ -20,11 +20,11 @@ Luego corre **Docker.app** . Click next. Te pedirá permisos de acceso que debes
         sudo systemctl start docker
 
 
-Obtén  el proyecto
+### 2.- Obtén  el proyecto
 
         https://github.com/aescobar-icc/magneto-api.git
 
-### 2.- Creacion de la base de datos
+### 3.- Creacion de la base de datos
 La api se conecta a una base de datos MySql para guardar los stats de verificaciones de adn.
 
 **Script de creación de Base de Datos**
@@ -42,7 +42,7 @@ La api se conecta a una base de datos MySql para guardar los stats de verificaci
 		)  ENGINE=INNODB;
 **Nota Importante:** La api puede funcionar sin la base de datos, esto se verá en más detalle en la sección probar api.
 
-### 3.- Configurar conexión a Base
+### 4.- Configurar conexión a Base
 Por simplicidad la uri de conexión a la base se debe especificar en el archivo `Dockerfile`
 
 		ENV SQLALCHEMY_URI=mysql+pymysql://admin:admin@123.123.123.123:3306/magneto
@@ -51,7 +51,7 @@ Para este ejemplo de conexión, estoy asumiendo que el servidor MySql es local y
 		sudo ifconfig lo0 alias 123.123.123.123/24
 En caso de que estés accediendo a un servidor con IP pública el paso anterior no es necesario.
 
-### 4.- Crea una imagen docker a partir del proyecto
+### 5.- Crea una imagen docker a partir del proyecto
 
         $ cd magneto-api
         $ sudo docker build -t magneto-api:v1 .
@@ -61,16 +61,16 @@ En caso de que estés accediendo a un servidor con IP pública el paso anterior 
 	$ sudo docker images
 	REPOSITORY  TAG IMAGE ID     CREATED   SIZE 
 	magneto-api v1  349e5abc9fec 5sec ago  343MB
-### 5.- Correr la Api 
+### 6.- Correr la Api 
 Ahora que ya tienes la imagen creada puedes correr el micro servicio.
 
         $ sudo docker run -it -p 5050:5000 magneto-api:v1
 
-Aquí estamos especificando que en el `host` la api será visible en el puerto 5050 y que en el `contenedor` corre en el puerto 5000.
+Aquí se está especificando que en el `host` la API será visible en el puerto 5050 y que en el `contenedor` corre en el puerto 5000.
 
-## Probar api usando postman
+### 7.- Probar api usando postman
 
-Nuestra imagen se ha publicado en http://localhost:5050/mutant podemos testear fácilmente nuestra api usando `postman` enviando la información de adn en el siguiente formato:
+Nuestra imagen se ha publicado en http://localhost:5050/mutant podemos testear fácilmente nuestra API usando `postman` enviando la información de adn en el siguiente formato:
 
 		{ “dna”:
 			["ATGCGA",
@@ -80,7 +80,7 @@ Nuestra imagen se ha publicado en http://localhost:5050/mutant podemos testear f
 			"CCCCTA",
 			"TCACTG"]
 		}
-Nota que si no has instalado la base de datos puedes agregar el valor `"nobase":null` para decirle a la api que no use la base de datos, obviamente esto hará que no se guraden stats.
+**Nota Importante:** Si no has instalado la base de datos puedes agregar el valor `"nobase":null` para decirle a la API que no use la base de datos, obviamente esto hará que no se guarden los stats.
 
 		{ “dna”:
 			["ATGCGA",
@@ -95,8 +95,8 @@ Nota que si no has instalado la base de datos puedes agregar el valor `"nobase":
 ![enter image description here](https://raw.githubusercontent.com/aescobar-icc/magneto-api/master/img/postman.png)
 
 
-# Instalacion GCloud
+### 8.- Instalacion GCloud
 
-Para un acompleta guia de como instalar esta API en la nube de google sigue esta guía:
+Para una completa guía de como instalar esta API en la nube de google sigue esta guía:
 
 [https://cloud.google.com/kubernetes-engine/docs/tutorials/hello-app](https://cloud.google.com/kubernetes-engine/docs/tutorials/hello-app)

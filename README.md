@@ -97,6 +97,6 @@ Nuestra imagen se ha publicado en http://localhost:5050/mutant podemos testear f
 
 ### 8.- Instalacion GCloud
 
-Para una completa guía de como instalar esta API en la nube de google sigue esta guía:
+Para una completa guía de como instalar esta API en la nube de google sigue este tutorial:
 
 [https://cloud.google.com/kubernetes-engine/docs/tutorials/hello-app](https://cloud.google.com/kubernetes-engine/docs/tutorials/hello-app)

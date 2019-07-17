@@ -2,8 +2,18 @@ class ADN:
     @staticmethod
     def isMutant(bases):
         if not bases:
+            print('invalid array')
             return False
         N = len(bases[0])
+        F = len(bases)
+        i=0
+        while i<F :
+            if N != len(bases[i]) :
+                print('mistmatch len')
+                return False
+            bases[i] = bases[i].upper()
+            i+=1
+
         MIN_LENGHT = 4
         if N < MIN_LENGHT:
             return False
@@ -16,8 +26,9 @@ class ADN:
             obli21 = 1;obli22 = 1
             while j < N:
                 #check valid char
-                #if(bases[i][j] != 'A' and bases[i][j] != 'T' and bases[i][j] != 'C' and bases[i][j] != 'G'):
-                #    return False
+                if(bases[i][j] != 'A' and bases[i][j] != 'T' and bases[i][j] != 'C' and bases[i][j] != 'G'):
+                    print('unsupported character')
+                    return False
 
                 #check horizontal
                 if j+1 < N and bases[i][j] == bases[i][j+1] :

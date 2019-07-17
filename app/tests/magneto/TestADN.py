@@ -29,3 +29,11 @@ class TestADN:
     def testMin(self):
         data = {"dna":["ATG","CAG","TTA","AGA","GCG","TCA"]}
         assert False == ADN.isMutant(data['dna'])
+
+    def testNonAllowed(self):
+        data = {"dna":["ATzG","CAxG","TTcA","AGvA","GhCG","TyCA"]}
+        assert False == ADN.isMutant(data['dna'])
+
+    def testmissmatch(self):
+        data = {"dna":["AAAAAA","AAAAA","AAAA","AAA","AA","A"]}
+        assert False == ADN.isMutant(data['dna'])

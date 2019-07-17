@@ -1,6 +1,7 @@
 # magneto-api
 
-Con magneto-api sabrás cuando un humano es mutante, si encuentras más de una secuencia de cuatro letras iguales , de forma oblicua, horizontal o vertical. 
+Con magneto-api sabrás cuando un humano es mutante si encuentras más de una secuencia de cuatro letras iguales , de forma oblicua, horizontal o vertical, dado un array de string que representan cada fila de una tabla
+de (NxN) con la secuencia del ADN.
 
 ![enter image description here](https://raw.githubusercontent.com/aescobar-icc/magneto-api/master/img/matris.png)
 
@@ -100,3 +101,9 @@ Nuestra imagen se ha publicado en http://localhost:5050/mutant podemos testear f
 Para una completa guía de como instalar esta API en la nube de google sigue este tutorial:
 
 [https://cloud.google.com/kubernetes-engine/docs/tutorials/hello-app](https://cloud.google.com/kubernetes-engine/docs/tutorials/hello-app)
+
+### 9.- Restricciones
+- Las letras de los Strings solo pueden ser: (A,T,C,G)
+- Todos los strings deben ser del mismo tamaño y concordante a la cantidad de filas (NxN)
+
+En caso de no cumplirse estas restricciones la api deveuelve la misma respuesta para no mutante 403-Forbidden.
